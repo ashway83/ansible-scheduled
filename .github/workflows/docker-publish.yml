@@ -7,6 +7,11 @@ name: Docker
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - 'workflow-test'
+    tags:
+      - 'v*'
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -61,7 +66,7 @@ jobs:
         uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934 # v5.0.0
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-        tags: |
+          tags: |
             type=ref,event=branch
             type=ref,event=pr
             type=semver,pattern={{version}}
